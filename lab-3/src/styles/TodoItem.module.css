@@ -1,0 +1,118 @@
+.item {
+  background: rgba(20, 20, 40, 0.7);
+  border: 1px solid rgba(120, 119, 198, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  position: relative;
+  overflow: hidden;
+}
+
+.item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(120, 119, 198, 0.1) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.item:hover::before {
+  left: 100%;
+}
+
+.item:hover {
+  border-color: rgba(120, 119, 198, 0.4);
+  box-shadow: 0 5px 20px rgba(120, 119, 198, 0.2);
+  transform: translateY(-2px);
+}
+
+.completed {
+  opacity: 0.6;
+  background: rgba(40, 40, 60, 0.5);
+}
+
+.completed .label span {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  flex: 1;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(120, 119, 198, 0.5);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.checkbox:checked {
+  background: linear-gradient(135deg, #7877c6 0%, #9090ff 100%);
+  border-color: #7877c6;
+  box-shadow: 0 0 10px rgba(120, 119, 198, 0.5);
+}
+
+.checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.checkbox:hover {
+  border-color: rgba(120, 119, 198, 0.8);
+  box-shadow: 0 0 5px rgba(120, 119, 198, 0.3);
+}
+
+.delete {
+  background: rgba(200, 50, 50, 0.2);
+  border: 1px solid rgba(200, 50, 50, 0.3);
+  color: rgba(255, 100, 100, 0.8);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.delete:hover {
+  background: rgba(200, 50, 50, 0.4);
+  border-color: rgba(200, 50, 50, 0.6);
+  color: rgba(255, 150, 150, 1);
+  box-shadow: 0 0 10px rgba(200, 50, 50, 0.3);
+  transform: scale(1.1);
+}
