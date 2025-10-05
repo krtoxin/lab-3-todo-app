@@ -23,23 +23,20 @@ export function useTodos() {
         todo: text,
         completed: false,
         userId: 1,
-        isLocal: true, 
+        isLocal: true,
       },
       ...old,
     ]);
   };
 
   const toggleMutation = useMutation({
-    mutationFn: ({ id, completed }) =>
-      axios.put(`${TODOS_URL}/${id}`, { completed }),
+    mutationFn: ({ id, completed }) => axios.put(`${TODOS_URL}/${id}`, { completed }),
     onMutate: async ({ id }) => {
       setMutatingId(id);
       await queryClient.cancelQueries(["todos"]);
       const prevTodos = queryClient.getQueryData(["todos"]);
       queryClient.setQueryData(["todos"], (old) =>
-        old.map((t) =>
-          t.id === id ? { ...t, completed: !t.completed } : t
-        )
+        old.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
       );
       return { prevTodos };
     },
@@ -56,9 +53,7 @@ export function useTodos() {
     if (!todo) return;
     if (todo.isLocal) {
       queryClient.setQueryData(["todos"], (old) =>
-        old.map((t) =>
-          t.id === id ? { ...t, completed: !t.completed } : t
-        )
+        old.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
       );
       return;
     }
@@ -72,9 +67,7 @@ export function useTodos() {
       setMutatingId(id);
       await queryClient.cancelQueries(["todos"]);
       const prevTodos = queryClient.getQueryData(["todos"]);
-      queryClient.setQueryData(["todos"], (old) =>
-        old.filter((t) => t.id !== id)
-      );
+      queryClient.setQueryData(["todos"], (old) => old.filter((t) => t.id !== id));
       return { prevTodos };
     },
     onError: (err, variables, context) => {
@@ -89,9 +82,7 @@ export function useTodos() {
     const todo = queryClient.getQueryData(["todos"]).find((t) => t.id === id);
     if (!todo) return;
     if (todo.isLocal) {
-      queryClient.setQueryData(["todos"], (old) =>
-        old.filter((t) => t.id !== id)
-      );
+      queryClient.setQueryData(["todos"], (old) => old.filter((t) => t.id !== id));
       return;
     }
     setMutatingId(id);
