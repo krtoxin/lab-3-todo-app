@@ -1,52 +1,43 @@
 # Lab 4: Fetching Data. Custom Hooks
 
-## Component Tree + Data Flow Diagram
+## Component Tree + State/Props Data Flow
 
 ```mermaid
-graph TD
-  App
+flowchart TD
+  App["App
+  (root, no state)"]
+  TodoList["TodoList
+  (uses useTodos hook)
+  Receives: none (root)"]
+  useTodos["useTodos (custom hook)
+  State: todos[], isLoading, error, mutatingId"]
+  AddTodoForm["AddTodoForm
+  Props: onAddTodo"]
+  TodoItem["TodoItem
+  Props: task, completed, loading, onToggle, onDelete"]
+
   App --> TodoList
-  TodoList --> useTodos
+  TodoList -.-> useTodos
   TodoList --> AddTodoForm
   TodoList --> TodoItem
+
+  %% Props down (arrows)
+  AddTodoForm -- "props: onAddTodo ↓" --> TodoList
+  TodoList -- "props: task, completed, loading, onToggle, onDelete ↓" --> TodoItem
+
+  %% Callbacks up (arrows)
+  AddTodoForm -.->|onAddTodo(newTask) ↑| TodoList
+  TodoItem -.->|onToggle(id), onDelete(id) ↑| TodoList
 ```
 
-**State & Props:**
-- **App:**  
-  - Renders `TodoList`.  
-  - **No state.**
-- **TodoList:**  
-  - Uses `useTodos` custom hook.  
-  - Receives and passes props/callbacks.
-- **useTodos (custom hook):**  
-  - Manages all todos state, API calls, and loading/error.
-- **AddTodoForm:**  
-  - Receives `onAddTodo` as prop, calls it upward.
-- **TodoItem:**  
-  - Receives `task`, `completed`, `loading`, `onToggle`, `onDelete` as props.
+**State:**
+- `todos[]`, `isLoading`, `error`, `mutatingId` живуть в `useTodos` (custom hook)
 
-**Data Flow:**  
-- **Props down:** `task`, `completed`, `loading`, `onToggle`, `onDelete`, `onAddTodo`
-- **Callbacks up:** `onAddTodo(newTask)`, `onToggle(id)`, `onDelete(id)`
+**Props:**
+- `onAddTodo` — від `TodoList` до `AddTodoForm`
+- `task`, `completed`, `loading`, `onToggle`, `onDelete` — від `TodoList` до кожного `TodoItem`
 
----
-
-## Technologies & Patterns
-
-- **React Query** for fetching/mutating todos (DummyJSON API)
-- **Custom Hook:** `useTodos`
-- **Optimistic UI** for toggle/delete
-- **Props down, callbacks up**
-- **Colocated state:** All todos/logic in the hook; App holds no state
-
----
-
-## Requirements Met
-
-- Loading indicator and error message handled in `TodoList`
-- User can add, toggle, and remove tasks (local+API)
-- Completed tasks styled distinctly
-- State colocated in `useTodos`, not in App
-- All data/handlers via props/callbacks
+**Data flow:**  
+- Props йдуть вниз (↓), callback-функції піднімаються вгору (↑).
 
 ---
