@@ -1,43 +1,49 @@
 # Lab 4: Fetching Data. Custom Hooks
 
-## Component Tree + State/Props Data Flow
+## Component Tree + Data Flow (State & Props)
 
 ```mermaid
-flowchart TD
-  App["App
-  (root, no state)"]
-  TodoList["TodoList
-  (uses useTodos hook)
-  Receives: none (root)"]
-  useTodos["useTodos (custom hook)
-  State: todos[], isLoading, error, mutatingId"]
-  AddTodoForm["AddTodoForm
-  Props: onAddTodo"]
-  TodoItem["TodoItem
-  Props: task, completed, loading, onToggle, onDelete"]
+classDiagram
+  class App {
+    +renders TodoList
+    state: none
+  }
+  class TodoList {
+    +uses useTodos
+    props: none (root)
+    state: none (all in useTodos)
+  }
+  class useTodos {
+    state: todos[], isLoading, error, mutatingId
+    +addTodo()
+    +toggleTodo()
+    +deleteTodo()
+  }
+  class AddTodoForm {
+    props: onAddTodo
+  }
+  class TodoItem {
+    props: task, completed, loading, onToggle, onDelete
+  }
 
   App --> TodoList
-  TodoList -.-> useTodos
-  TodoList --> AddTodoForm
-  TodoList --> TodoItem
-
-  %% Props down (arrows)
-  AddTodoForm -- "props: onAddTodo ↓" --> TodoList
-  TodoList -- "props: task, completed, loading, onToggle, onDelete ↓" --> TodoItem
-
-  %% Callbacks up (arrows)
-  AddTodoForm -.->|onAddTodo(newTask) ↑| TodoList
-  TodoItem -.->|onToggle(id), onDelete(id) ↑| TodoList
+  TodoList --> useTodos : hook
+  TodoList --> AddTodoForm : onAddTodo ↓
+  TodoList --> TodoItem : task, completed, loading, onToggle, onDelete ↓
+  AddTodoForm ..> TodoList : onAddTodo(newTask) ↑
+  TodoItem ..> TodoList : onToggle(id), onDelete(id) ↑
 ```
 
+---
+
 **State:**
-- `todos[]`, `isLoading`, `error`, `mutatingId` живуть в `useTodos` (custom hook)
+- `useTodos` (custom hook): `todos[]`, `isLoading`, `error`, `mutatingId`
 
 **Props:**
-- `onAddTodo` — від `TodoList` до `AddTodoForm`
-- `task`, `completed`, `loading`, `onToggle`, `onDelete` — від `TodoList` до кожного `TodoItem`
+- `onAddTodo` — `TodoList` → `AddTodoForm`
+- `task`, `completed`, `loading`, `onToggle`, `onDelete` — `TodoList` → `TodoItem`
 
-**Data flow:**  
-- Props йдуть вниз (↓), callback-функції піднімаються вгору (↑).
+**Data Flow:**  
+- Props flow downward (↓), callback functions flow upward (↑).
 
 ---
