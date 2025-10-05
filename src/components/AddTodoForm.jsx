@@ -17,7 +17,7 @@ export default function AddTodoForm({ onAddTodo }) {
       <input
         className={styles.input}
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={e => setInput(e.target.value)}
         placeholder="Add a new task..."
         autoFocus
       />

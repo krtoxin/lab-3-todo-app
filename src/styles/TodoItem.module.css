@@ -57,6 +57,7 @@
   color: rgba(255, 255, 255, 0.9);
   font-size: 1rem;
   font-weight: 400;
+  position: relative;
 }
 
 .checkbox {
@@ -115,4 +116,19 @@
   color: rgba(255, 150, 150, 1);
   box-shadow: 0 0 10px rgba(200, 50, 50, 0.3);
   transform: scale(1.1);
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #7877c6;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

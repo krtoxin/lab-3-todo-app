@@ -1,30 +1,39 @@
-import { useState } from "react";
 import AddTodoForm from "./AddTodoForm";
 import TodoItem from "./TodoItem";
 import styles from "../styles/TodoList.module.css";
+import { useTodos } from "../hooks/useTodos";
 
 export default function TodoList() {
-  const [todos, setTodos] = useState([]);
-
-  const handleAddTodo = (task) => {
-    setTodos([...todos, { id: Date.now(), task }]);
-  };
-
-  const handleDeleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+  const { todos, isLoading, error, addTodo, toggleTodo, deleteTodo, mutatingId } = useTodos();
 
   return (
     <div className={styles.wrapper}>
-      <AddTodoForm onAddTodo={handleAddTodo} />
-      {todos.length === 0 ? (
+      <AddTodoForm onAddTodo={addTodo} />
+      {isLoading && (
+        <div className={styles.empty}>
+          <span className={styles.emptyText}>Loading...</span>
+        </div>
+      )}
+      {error && (
+        <div className={styles.empty}>
+          <span className={styles.emptyText}>{error}</span>
+        </div>
+      )}
+      {todos.length === 0 && !isLoading ? (
         <div className={styles.empty}>
           <span className={styles.emptyText}>No tasks yet. May grace guide you...</span>
         </div>
       ) : (
         <ul className={styles.list}>
           {todos.map((todo) => (
-            <TodoItem key={todo.id} task={todo.task} onDelete={() => handleDeleteTodo(todo.id)} />
+            <TodoItem
+              key={todo.id}
+              task={todo.todo || todo.task}
+              completed={todo.completed}
+              onToggle={() => toggleTodo(todo.id)}
+              onDelete={() => deleteTodo(todo.id)}
+              loading={mutatingId === todo.id}
+            />
           ))}
         </ul>
       )}

@@ -1,15 +1,18 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import TodoList from "./components/TodoList";
 import styles from "./styles/App.module.css";
 
-function App() {
+const queryClient = new QueryClient();
+
+export default function App() {
   return (
     <div className={styles.appBg}>
       <div className={styles.centerPanel}>
-        <h1 className={styles.title}>Elden Ring To-Do List</h1>
-        <TodoList />
+        <QueryClientProvider client={queryClient}>
+          <h1 className={styles.title}>Elden Ring Todo List</h1>
+          <TodoList />
+        </QueryClientProvider>
       </div>
     </div>
   );
 }
-
-export default App;
