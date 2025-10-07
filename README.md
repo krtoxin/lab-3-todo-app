@@ -1,6 +1,6 @@
 # Labs 5-6: React Design Patterns (Extended To-Do)
 
-## Component Tree + Data Flow (Updated)
+## Component Tree + Data Flow
 
 ```mermaid
 classDiagram
