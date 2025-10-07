@@ -68,7 +68,9 @@ export default function TodoList() {
       )}
       <div className={styles.footer}>
         <div className={styles.metrics}>
-          <span>Page {currentPage} of {totalPages}</span>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
           <span className={styles.metricsDivider}>|</span>
           <span>{totalTodos} items</span>
         </div>

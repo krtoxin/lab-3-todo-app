@@ -76,7 +76,12 @@ export default function TodoItem({ task, completed, onToggle, onDelete, onEdit, 
           >
             Edit
           </button>
-          <button className={styles.delete} onClick={onDelete} aria-label="Delete" disabled={loading}>
+          <button
+            className={styles.delete}
+            onClick={onDelete}
+            aria-label="Delete"
+            disabled={loading}
+          >
             ×
           </button>
         </>

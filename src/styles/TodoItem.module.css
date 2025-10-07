@@ -138,7 +138,8 @@
   color: white;
 }
 
-.edit, .save {
+.edit,
+.save {
   background: rgba(120, 119, 198, 0.2);
   border: 1px solid rgba(120, 119, 198, 0.3);
   color: rgba(200, 200, 255, 0.9);
@@ -149,7 +150,8 @@
   margin-right: 0.4rem;
 }
 
-.edit:hover, .save:hover {
+.edit:hover,
+.save:hover {
   background: rgba(120, 119, 198, 0.35);
   border-color: rgba(120, 119, 198, 0.6);
 }
